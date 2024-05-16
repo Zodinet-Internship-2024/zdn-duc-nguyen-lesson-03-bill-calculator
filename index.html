@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="src/scss/main.css" />
+
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <h3 class="title">S P L I</h3>
+      <h3 class="title">T T E R</h3>
+      <div class="calculator">
+        <div class="calculator__grid">
+          <div class="calculator__section-1">
+            <div class="calculator__bill">
+              <div class="calculator__label">Bill</div>
+              <div class="calculator__bill-input">
+                <span>$</span>
+                <input
+                  type="number"
+                  class="calculator__input-bill"
+                  name="bill"
+                />
+              </div>
+            </div>
+            <div class="calculator__tip">
+              <div>Select Tip %</div>
+              <div class="calculator__tip-buttons">
+                <div class="calculator__button-group">
+                  <button class="calculator__button">5%</button>
+                  <button class="calculator__button">10%</button>
+                  <button class="calculator__button">15%</button>
+                </div>
+                <div class="calculator__button-group">
+                  <button class="calculator__button">20%</button>
+                  <button class="calculator__button">50%</button>
+                  <input
+                    type="number"
+                    class="calculator__input-tip"
+                    name="custom-tip"
+                    placeholder=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="calculator__people">
+              <div class="calculator__people-title">
+                <div>Number of people</div>
+                <div class="calculator__people-title-zero active">
+                  Can't be zero
+                </div>
+              </div>
+              <div class="calculator__people-input">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="calculator__icon"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+                  />
+                </svg>
+                <input
+                  type="number"
+                  class="calculator__input-people"
+                  name="people"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="calculator__section-2">
+            <div class="calculator__summary">
+              <div class="calculator__tip-amount calculator__line">
+                <div class="calculator__tip-text">
+                  <div>Tip Amount</div>
+                  <p>/ person</p>
+                </div>
+                <div class="calculator__amount">
+                  <h1>$0.00</h1>
+                </div>
+              </div>
+              <div class="calculator__total calculator__line">
+                <div class="calculator__total-text">
+                  <div>Total</div>
+                  <p>/ person</p>
+                </div>
+                <div class="calculator__amount">
+                  <h1>$0.00</h1>
+                </div>
+              </div>
+            </div>
+            <div class="calculator__reset">
+              <button class="calculator__button-reset">RESET</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
