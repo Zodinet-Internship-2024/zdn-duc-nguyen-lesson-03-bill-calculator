@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "sass": "^1.77.1"
+    
+  },
+  "scripts": {
+
+    "start": "sass src/scss:public"
+    
+
+  }
+}
