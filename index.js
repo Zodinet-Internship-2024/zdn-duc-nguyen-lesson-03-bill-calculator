@@ -1,115 +1,117 @@
-document.addEventListener('DOMContentLoaded', () => {
+import {
+  preventInvalidInput,
+  preventInvalidPaste,
+  amountDisplay,
+} from "./helper.js";
 
-    const billInput = document.querySelector('.calculator__input-bill');
-    const tipButtons = document.querySelectorAll('.calculator__button');
-    const customTipInput = document.querySelector('.calculator__input-tip');
-    const peopleInput = document.querySelector('.calculator__input-people');
-    const tipAmountDisplay = document.querySelector('.calculator__tip-amount h1');
-    const totalDisplay = document.querySelector('.calculator__total h1');
-    const resetButton = document.querySelector('.calculator__button-reset');
-    const inputPeople  =document.querySelector('.calculator__people-input');
-    
-    const zero  =document.querySelector('.calculator__people-title-zero');
+document.addEventListener("DOMContentLoaded", () => {
+  const billInput = document.querySelector(".calculator__input-bill");
+  const tipButtons = document.querySelectorAll(".calculator__button");
+  const customTipInput = document.querySelector(".calculator__input-tip");
+  const peopleInput = document.querySelector(".calculator__input-people");
+  const tipAmountDisplay = document.querySelector(".calculator__tip-amount h1");
+  const totalDisplay = document.querySelector(".calculator__total h1");
+  const resetButton = document.querySelector(".calculator__button-reset");
+  const inputPeople = document.querySelector(".calculator__people-input");
+  const inputBill = document.querySelector(".calculator__bill-input");
+  const titleError = document.querySelector(".calculator__people-title-zero");
+  const titleErrorBill = document.querySelector(".calculator__bill-title-zero");
+  const zero = document.querySelector(".calculator__people-title-zero");
+  const zeroBill = document.querySelector(".calculator__bill-title-zero");
 
-    let billValue = 0;
-    let tipValue = 0;
-    let peopleValue = 0;
+  let billValue = 0;
+  let tipValue = 0;
+  let peopleValue = 0;
 
-    const calculateTip = () => {
-        if (peopleValue === 0) {
-            tipAmountDisplay.innerText = '$0.00';
-            totalDisplay.innerText = '$0.00';
-            // inputPeople.classList.add('active');
-            // zero.classList.remove('active');
-            return;
-        }
-        // if (peopleValue >= 0) {
-        //     inputPeople.classList.remove('active');
-        //     zero.classList.add('active');
-        // }
+  const calculateTip = () => {
+    console.log(peopleValue);
+    if (peopleValue === 0 || tipValue === 0) {
+      tipAmountDisplay.innerText = "$0.00";
+      totalDisplay.innerText = "$0.00";
 
-        const tipAmount = (billValue * tipValue) / 100 / peopleValue;
-        const total = (billValue / peopleValue) + tipAmount;
+      return;
+    }
 
-        tipAmountDisplay.innerText = `$${tipAmount.toFixed(2)}`;
-        totalDisplay.innerText = `$${total.toFixed(2)}`;
-    };
-    const extractNumbers = (input) => {
+    const tipAmount = (billValue * tipValue) / 100 / peopleValue;
+    const total = billValue / peopleValue + tipAmount;
 
-        const numbers = input.match(/\d+/g);
+    tipAmountDisplay.innerText = `$${tipAmount.toFixed(2)}`;
+    tipAmountDisplay.title = `$${tipAmount.toFixed(2)}`;
+    totalDisplay.innerText = `$${total.toFixed(2)}`;
+    totalDisplay.title = `$${total.toFixed(2)}`;
+  };
 
-        return numbers ? numbers.join('') : '';
-    };
-    const preventInvalidInput = (event) => {
-        if (['e', 'E', '+', '-', '.'].includes(event.key)) {
-            event.preventDefault();
-        }
-    };
-    const preventInvalidPaste = (event) => {
-        // Lấy dữ liệu từ clipboard
-        const clipboardData = (event.clipboardData || window.clipboardData).getData('text');
-        // Kiểm tra xem dữ liệu có chứa các ký tự không hợp lệ không
-        console.log(clipboardData);
-        const output = extractNumbers(clipboardData);
-        console.log(output);
-        if (/[eE+\-.]/.test(clipboardData)) {
-            event.preventDefault();
-        }
-    };
-    billInput.addEventListener('paste', preventInvalidPaste);
-    billInput.addEventListener('keydown', preventInvalidInput);
-    peopleInput.addEventListener('keydown', preventInvalidInput);
+  const inputs = document.querySelectorAll("input[type='number']");
+  inputs.forEach((input) => {
+    input.addEventListener("keydown", preventInvalidInput);
+  });
 
-    billInput.addEventListener('input', () => {
-        console.log(billInput.value);
-        billValue = parseFloat(billInput.value) || 0;
-        calculateTip();
+  billInput.addEventListener("paste", preventInvalidPaste);
+  peopleInput.addEventListener("paste", preventInvalidPaste);
+  customTipInput.addEventListener("paste", preventInvalidPaste);
+
+  billInput.addEventListener("input", () => {
+    billValue = parseFloat(billInput.value) || 0;
+    console.log(billValue);
+    if (billValue === 0) {
+      zeroBill.classList.remove("active");
+      inputBill.classList.add("active");
+      titleErrorBill.innerText = "Can't  be zero!";
+      amountDisplay(tipAmountDisplay, totalDisplay);
+      return;
+    }
+    if (billValue >= 0) {
+      inputBill.classList.remove("active");
+      zeroBill.classList.add("active");
+    }
+    calculateTip();
+  });
+
+  tipButtons.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      tipButtons.forEach((btn) => btn.classList.remove("active"));
+      event.target.classList.add("active");
+      tipValue = parseFloat(event.target.innerText) || 0;
+      customTipInput.value = "";
+      calculateTip();
     });
+  });
 
-    tipButtons.forEach(button => {
-        button.addEventListener('click', (event) => {
-            tipButtons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            tipValue = parseFloat(event.target.innerText) || 0;
-            customTipInput.value = '';
-            calculateTip();
-        });
-    });
+  customTipInput.addEventListener("input", () => {
+    tipValue = parseFloat(customTipInput.value) || 0;
+    tipButtons.forEach((btn) => btn.classList.remove("active"));
+    calculateTip();
+  });
 
-    customTipInput.addEventListener('input', () => {
-        tipValue = parseFloat(customTipInput.value) || 0;
-        tipButtons.forEach(btn => btn.classList.remove('active'));
-        calculateTip();
-    });
+  peopleInput.addEventListener("input", () => {
+    peopleValue = parseFloat(peopleInput.value) || 0;
+    if (peopleValue === 0) {
+      titleError.innerText = "Can't  be zero!";
+      inputPeople.classList.add("active");
+      zero.classList.remove("active");
+      amountDisplay(tipAmountDisplay, totalDisplay);
 
-    peopleInput.addEventListener('input', () => {
-        peopleValue = parseFloat(peopleInput.value) || 0;
-        if (peopleValue === 0) {
-            inputPeople.classList.add('active');
-            zero.classList.remove('active');
-            tipAmountDisplay.innerText = '$0.00';
-            totalDisplay.innerText = '$0.00';
-            return;
-        }
-        if (peopleValue >= 0) {
-            inputPeople.classList.remove('active');
-            zero.classList.add('active');
-        }
+      return;
+    }
 
-     
-        calculateTip();
-    });
+    if (peopleValue >= 0) {
+      inputPeople.classList.remove("active");
+      zero.classList.add("active");
+    }
 
-    resetButton.addEventListener('click', () => {
-        billInput.value = '';
-        customTipInput.value = '';
-        peopleInput.value = '';
-        tipButtons.forEach(btn => btn.classList.remove('active'));
-        billValue = 0;
-        tipValue = 0;
-        peopleValue = 1;
-        tipAmountDisplay.innerText = '$0.00';
-        totalDisplay.innerText = '$0.00';
-    });
+    calculateTip();
+  });
+
+  resetButton.addEventListener("click", () => {
+    billInput.value = "";
+    customTipInput.value = "";
+    peopleInput.value = "";
+    tipButtons.forEach((btn) => btn.classList.remove("active"));
+    billValue = 0;
+    tipValue = 0;
+    peopleValue = 1;
+    amountDisplay(tipAmountDisplay, totalDisplay);
+    inputPeople.classList.remove("active");
+    zero.classList.add("active");
+  });
 });
-
