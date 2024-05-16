@@ -19,6 +19,10 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .title {
   display: flex;
   justify-content: center;
@@ -31,7 +35,7 @@ input[type=number] {
 }
 @media (max-width: 767px) {
   .container {
-    width: 50%;
+    width: 100%;
     flex-direction: column;
   }
 }
@@ -60,6 +64,20 @@ input[type=number] {
     width: 100%;
     margin-right: 0;
   }
+}
+.calculator__section-1 .calculator__bill-title {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.calculator__section-1 .calculator__bill-title-zero {
+  color: red;
+}
+.calculator__section-1 .calculator__bill-title .active {
+  visibility: hidden;
+}
+.calculator__section-1 div.calculator__bill-input.active {
+  border-color: red;
 }
 .calculator__section-1 .calculator__bill-input:focus-within {
   border-color: hsl(172, 67%, 45%);
@@ -130,6 +148,9 @@ input[type=number] {
   background: hsl(172, 67%, 45%);
   color: hsl(183, 100%, 15%);
 }
+.calculator__tip .calculator__tip-buttons .calculator__button-group .calculator__button:hover {
+  background: hsl(172, 67%, 45%);
+}
 .calculator__tip .calculator__tip-buttons .calculator__button-group .calculator__input-tip {
   width: 30%;
   margin-right: 8px;
@@ -166,6 +187,9 @@ input[type=number] {
   width: 12px;
   color: hsl(185, 41%, 84%);
 }
+.calculator__people .calculator__people-input:focus-within {
+  border-color: hsl(172, 67%, 45%);
+}
 .calculator__people .calculator__people-input .calculator__input-people {
   padding: 2px 8px;
   width: 90%;
@@ -177,8 +201,11 @@ input[type=number] {
 .calculator__people .calculator__people-input .calculator__input-people:focus {
   outline: none;
 }
-.calculator__people .active {
+.calculator__people div.calculator__people-input.active {
   border-color: red;
+}
+.calculator__line {
+  flex-wrap: wrap;
 }
 .calculator__line .calculator__tip-text div {
   color: hsl(189, 41%, 97%);
@@ -189,6 +216,10 @@ input[type=number] {
 }
 .calculator__line .calculator__amount h1 {
   color: hsl(172, 67%, 45%);
+  width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: right;
 }
 .calculator__tip-amount, .calculator__total {
   display: flex;
@@ -220,4 +251,7 @@ input[type=number] {
   border-radius: 4px;
   margin-left: 20px;
   margin-right: 20px;
+}
+.calculator__reset .calculator__button-reset:hover {
+  background: hsl(184, 14%, 56%);
 }/*# sourceMappingURL=main.css.map */
